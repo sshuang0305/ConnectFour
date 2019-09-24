@@ -7,7 +7,6 @@
 
 package nl.sogyo.connectfour
 
-import android.graphics.Color
 import junit.framework.TestCase.assertEquals
 import org.junit.*
 import org.junit.Assert.*
@@ -43,14 +42,12 @@ class GameBoardInitTest {
 
     @Test
     fun isNumberOfDiscsCreatedCorrectlyTest() {
-        assertEquals(42, gameBoard!!.discs.size)
+        assertEquals(42, gameBoard!!.discContainer.size)
     }
 
     @Test
-    fun isYellowAndRedDiscCreatedTest() {
-        assertEquals(DiscColor.YELLOW, gameBoard!!.discs[0].color)
-        assertEquals(DiscColor.RED, gameBoard!!.discs[1].color)
-        assertEquals(DiscColor.YELLOW, gameBoard!!.discs[2].color)
-        assertEquals(DiscColor.RED, gameBoard!!.discs[41].color)
+    fun isMyAndOpponentsDiscsCreatedTest() {
+        assertTrue(gameBoard!!.discContainer[0].myDisc)
+        assertFalse(gameBoard!!.discContainer[1].myDisc)
     }
 }

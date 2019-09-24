@@ -25,104 +25,61 @@ class ConnectFourGameTest {
     }
 
     @Test
-    fun isInputValidTest() {
-        TestCase.assertEquals(true, gameBoard!!.isInputValid(0))
-        TestCase.assertEquals(true, gameBoard!!.isInputValid(6))
-        TestCase.assertEquals(false, gameBoard!!.isInputValid(-10))
-        TestCase.assertEquals(false, gameBoard!!.isInputValid(7))
-    }
-
-    @Test
-    fun isDiscCorrectlyPlacedInGridCellTest() {
+    fun isDiscDroppedCorrectlyInColumnTest() {
         TestCase.assertEquals(null, gameBoard!!.gridContainer[5][0].disc)
         gameBoard!!.dropDiscIntoColumn(0)
-        TestCase.assertEquals(Disc(DiscColor.YELLOW), gameBoard!!.gridContainer[5][0].disc)
-        TestCase.assertEquals(41, gameBoard!!.discs.size)
+        TestCase.assertEquals(true, gameBoard!!.gridContainer[5][0].disc?.myDisc)
+        TestCase.assertEquals(41, gameBoard!!.discContainer.size)
 
         TestCase.assertEquals(null, gameBoard!!.gridContainer[4][0].disc)
         gameBoard!!.dropDiscIntoColumn(0)
-        TestCase.assertEquals(Disc(DiscColor.RED), gameBoard!!.gridContainer[4][0].disc)
-        TestCase.assertEquals(40, gameBoard!!.discs.size)
+        TestCase.assertEquals(false, gameBoard!!.gridContainer[4][0].disc?.myDisc)
+        TestCase.assertEquals(40, gameBoard!!.discContainer.size)
     }
 
     @Test
     fun checkForHorizontalWinTest() {
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(3)
+        gameBoard!!.gridContainer[5][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[5][1].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[5][2].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
         TestCase.assertTrue(gameBoard!!.isConnectedHorizontally())
     }
 
     @Test
     fun checkForVerticalWinTest() {
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.gridContainer[0][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[1][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[2][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[3][0].placeDisc(Disc(true))
         TestCase.assertTrue(gameBoard!!.isConnectedVertically())
     }
 
     @Test
     fun checkForLeftDownToRightUpWinTest() {
-        gameBoard!!.dropDiscIntoColumn(3)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(5)
-        gameBoard!!.dropDiscIntoColumn(6)
-        gameBoard!!.dropDiscIntoColumn(6)
-        gameBoard!!.dropDiscIntoColumn(4)
-        gameBoard!!.dropDiscIntoColumn(4)
-        gameBoard!!.dropDiscIntoColumn(5)
-        gameBoard!!.dropDiscIntoColumn(5)
-        gameBoard!!.dropDiscIntoColumn(6)
-        gameBoard!!.dropDiscIntoColumn(6)
+        gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[4][4].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[3][5].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[2][6].placeDisc(Disc(true))
         TestCase.assertTrue(gameBoard!!.isConnectedLeftDownToRightUp())
     }
 
     @Test
     fun checkForRightDownToLeftUpWinTest() {
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(3)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.gridContainer[2][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[3][1].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[4][2].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
         TestCase.assertTrue(gameBoard!!.isConnectedRightDownToLeftUp())
     }
 
     @Test
     fun isGameFinishedTest() {
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(3)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(1)
-        gameBoard!!.dropDiscIntoColumn(0)
-        gameBoard!!.dropDiscIntoColumn(2)
-        gameBoard!!.dropDiscIntoColumn(0)
         TestCase.assertFalse(gameBoard!!.isGameFinished())
-        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.gridContainer[2][0].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[3][1].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[4][2].placeDisc(Disc(true))
+        gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
         TestCase.assertTrue(gameBoard!!.isGameFinished())
     }
-
-
-
 }
-//for (row in gameBoard!!.gridContainer) {
-//    row.forEach{ print("${it.disc?.color} \t\t" )}
-//    println()
-//}
-//

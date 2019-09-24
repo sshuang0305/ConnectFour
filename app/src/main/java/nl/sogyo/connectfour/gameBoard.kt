@@ -6,16 +6,17 @@
  */
 package nl.sogyo.connectfour
 
+const val DISCS_CONNECTED_FOR_WIN = 4
+
 class GameBoard(private val width: Int, private val height: Int) {
-    private val NO_DISCS_CONNECTED_FOR_WIN = 4
-    val gridContainer = List(height) {row -> (List(width) {column -> GridCell(null)})}
-    val discs = MutableList(height * width) {disc -> if ( disc % 2 == 0) Disc(DiscColor.YELLOW) else Disc(DiscColor.RED)}
 
-    fun isInputValid(inputColumn: Int) = inputColumn in 0 until width
-    private fun isSpaceAvailableInColumnForDisc(inputColumn: Int) = gridContainer[0][inputColumn].isEmpty()
-    private fun getDiscToPlay() = discs.removeAt(0)
+    var gridContainer = List(height) {(List(width) {GridCell()})}
+    val discContainer = MutableList(height * width) { disc -> if ( disc % 2 == 0) Disc(true) else Disc(false)}
 
-    private fun getGridCellFromInput(inputColumn: Int): GridCell {
+    private fun isValidInput(inputColumn: Int) = inputColumn in 0 until width
+    private fun isSpaceAvailableInColumn(inputColumn: Int) = gridContainer[0][inputColumn].isEmpty()
+    private fun getDiscToPlay() = discContainer.removeAt(0)
+    private fun getLowestAvailableGridCell(inputColumn: Int): GridCell {
         for (row in height - 1 downTo 1) {
             if (gridContainer[row][inputColumn].isEmpty()) return gridContainer[row][inputColumn]
         }
@@ -23,24 +24,14 @@ class GameBoard(private val width: Int, private val height: Int) {
     }
 
     fun dropDiscIntoColumn(inputColumn: Int) {
-        if (isInputValid(inputColumn) && isSpaceAvailableInColumnForDisc(inputColumn)) {
-            getGridCellFromInput(inputColumn).placeDisc(getDiscToPlay())
+        if (isValidInput(inputColumn) && isSpaceAvailableInColumn(inputColumn)) {
+            getLowestAvailableGridCell(inputColumn).placeDisc(getDiscToPlay())
         }
     }
 
     private fun areSameDiscsInGridCells(gridCells: List<GridCell>): Boolean {
         val distinctDiscs = gridCells.map{it.disc}.distinct()
         return (distinctDiscs[0] != null && distinctDiscs.size == 1)
-    }
-
-    fun isConnectedHorizontally(): Boolean {
-        for (row in height - 1 downTo 0) {
-            for (col in 0 .. width - NO_DISCS_CONNECTED_FOR_WIN) {
-                val gridCells = gridContainer[row].slice(col until col + NO_DISCS_CONNECTED_FOR_WIN)
-                if (areSameDiscsInGridCells(gridCells)) {return true}
-            }
-        }
-        return false
     }
 
     private fun getTransposedGridContainer(): List< List<GridCell> > {
@@ -55,11 +46,21 @@ class GameBoard(private val width: Int, private val height: Int) {
         return transposedGridContainer
     }
 
+    fun isConnectedHorizontally(): Boolean {
+        for (row in gridContainer) {
+            for (col in 0 .. width - DISCS_CONNECTED_FOR_WIN) {
+                val gridCells = row.slice(col until col + DISCS_CONNECTED_FOR_WIN)
+                if (areSameDiscsInGridCells(gridCells)) {return true}
+            }
+        }
+        return false
+    }
+
     fun isConnectedVertically(): Boolean {
         val transposedGridContainer = getTransposedGridContainer()
         for (row in transposedGridContainer) {
-            for (col in 0 until NO_DISCS_CONNECTED_FOR_WIN - 1) {
-                val gridCells = row.slice(col until col + NO_DISCS_CONNECTED_FOR_WIN)
+            for (col in 0 until width - DISCS_CONNECTED_FOR_WIN) {
+                val gridCells = row.slice(col until col + DISCS_CONNECTED_FOR_WIN)
                 if (areSameDiscsInGridCells(gridCells)) return true
             }
         }
@@ -67,9 +68,9 @@ class GameBoard(private val width: Int, private val height: Int) {
     }
 
     fun isConnectedLeftDownToRightUp(): Boolean {
-        for (row in height - 1 downTo NO_DISCS_CONNECTED_FOR_WIN - 1) {
-            for (col in 0..width - NO_DISCS_CONNECTED_FOR_WIN) {
-                val gridCells = List(NO_DISCS_CONNECTED_FOR_WIN) { i -> gridContainer[row - i][col + i] }
+        for (row in height - 1 downTo DISCS_CONNECTED_FOR_WIN - 1) {
+            for (col in 0..width - DISCS_CONNECTED_FOR_WIN) {
+                val gridCells = List(DISCS_CONNECTED_FOR_WIN) { i -> gridContainer[row - i][col + i] }
                 if (areSameDiscsInGridCells(gridCells)) return true
             }
         }
@@ -77,9 +78,9 @@ class GameBoard(private val width: Int, private val height: Int) {
     }
 
     fun isConnectedRightDownToLeftUp(): Boolean {
-        for (row in height - 1 downTo NO_DISCS_CONNECTED_FOR_WIN - 1) {
-            for (col in width - 1 downTo  NO_DISCS_CONNECTED_FOR_WIN - 1) {
-                val gridCells = List(NO_DISCS_CONNECTED_FOR_WIN) { i -> gridContainer[row - i][col - i] }
+        for (row in height - 1 downTo DISCS_CONNECTED_FOR_WIN - 1) {
+            for (col in width - 1 downTo  DISCS_CONNECTED_FOR_WIN - 1) {
+                val gridCells = List(DISCS_CONNECTED_FOR_WIN) { i -> gridContainer[row - i][col - i] }
                 if (areSameDiscsInGridCells(gridCells)) return true
             }
         }
