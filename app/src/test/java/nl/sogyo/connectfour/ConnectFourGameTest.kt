@@ -82,14 +82,47 @@ class ConnectFourGameTest {
         gameBoard!!.dropDiscIntoColumn(5)
         gameBoard!!.dropDiscIntoColumn(6)
         gameBoard!!.dropDiscIntoColumn(6)
-
-
-        for (row in gameBoard!!.gridContainer) {
-            row.forEach{ print("${it.disc?.color} \t\t" )}
-            println()
-        }
-
         TestCase.assertTrue(gameBoard!!.isConnectedLeftDownToRightUp())
     }
 
+    @Test
+    fun checkForRightDownToLeftUpWinTest() {
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(3)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(0)
+        TestCase.assertTrue(gameBoard!!.isConnectedRightDownToLeftUp())
+    }
+
+    @Test
+    fun isGameFinishedTest() {
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(3)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(0)
+        TestCase.assertFalse(gameBoard!!.isGameFinished())
+        gameBoard!!.dropDiscIntoColumn(0)
+        TestCase.assertTrue(gameBoard!!.isGameFinished())
+    }
+
+
+
 }
+//for (row in gameBoard!!.gridContainer) {
+//    row.forEach{ print("${it.disc?.color} \t\t" )}
+//    println()
+//}
+//

@@ -75,4 +75,18 @@ class GameBoard(private val width: Int, private val height: Int) {
         }
         return false
     }
+
+    fun isConnectedRightDownToLeftUp(): Boolean {
+        for (row in height - 1 downTo NO_DISCS_CONNECTED_FOR_WIN - 1) {
+            for (col in width - 1 downTo  NO_DISCS_CONNECTED_FOR_WIN - 1) {
+                val gridCells = List(NO_DISCS_CONNECTED_FOR_WIN) { i -> gridContainer[row - i][col - i] }
+                if (areSameDiscsInGridCells(gridCells)) return true
+            }
+        }
+        return false
+    }
+
+    fun isGameFinished(): Boolean {
+        return isConnectedHorizontally() || isConnectedVertically() || isConnectedLeftDownToRightUp() || isConnectedRightDownToLeftUp()
+    }
 }
