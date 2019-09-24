@@ -4,6 +4,7 @@
  * @since 18/09/19
  * @author Shan Shan Huang
  */
+
 package nl.sogyo.connectfour
 
 const val DISCS_CONNECTED_FOR_WIN = 4
