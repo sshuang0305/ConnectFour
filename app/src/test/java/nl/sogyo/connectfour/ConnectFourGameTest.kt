@@ -54,7 +54,6 @@ class ConnectFourGameTest {
         gameBoard!!.dropDiscIntoColumn(2)
         gameBoard!!.dropDiscIntoColumn(2)
         gameBoard!!.dropDiscIntoColumn(3)
-
         TestCase.assertTrue(gameBoard!!.isConnectedHorizontally())
     }
 
@@ -67,8 +66,30 @@ class ConnectFourGameTest {
         gameBoard!!.dropDiscIntoColumn(0)
         gameBoard!!.dropDiscIntoColumn(1)
         gameBoard!!.dropDiscIntoColumn(0)
-
-
         TestCase.assertTrue(gameBoard!!.isConnectedVertically())
     }
+
+    @Test
+    fun checkForLeftDownToRightUpWinTest() {
+        gameBoard!!.dropDiscIntoColumn(3)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(5)
+        gameBoard!!.dropDiscIntoColumn(6)
+        gameBoard!!.dropDiscIntoColumn(6)
+        gameBoard!!.dropDiscIntoColumn(4)
+        gameBoard!!.dropDiscIntoColumn(4)
+        gameBoard!!.dropDiscIntoColumn(5)
+        gameBoard!!.dropDiscIntoColumn(5)
+        gameBoard!!.dropDiscIntoColumn(6)
+        gameBoard!!.dropDiscIntoColumn(6)
+
+
+        for (row in gameBoard!!.gridContainer) {
+            row.forEach{ print("${it.disc?.color} \t\t" )}
+            println()
+        }
+
+        TestCase.assertTrue(gameBoard!!.isConnectedLeftDownToRightUp())
+    }
+
 }
