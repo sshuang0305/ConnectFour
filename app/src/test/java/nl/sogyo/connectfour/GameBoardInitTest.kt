@@ -13,7 +13,7 @@ import org.junit.Assert.*
 
 class GameBoardInitTest {
 
-    var gameBoard: GameBoard? = null
+    private var gameBoard: GameBoard? = null
 
     @Before fun setUp() {
         gameBoard = GameBoard(7, 6)
@@ -27,12 +27,6 @@ class GameBoardInitTest {
     fun is7Column6RowBoardCreatedTest() {
         assertEquals(7, gameBoard!!.gridContainer[0].size)
         assertEquals(6, gameBoard!!.gridContainer.size)
-    }
-
-    @Test
-    fun isBoardConsistingOfGridCellsTest() {
-        assertTrue(gameBoard!!.gridContainer[0][0] is GridCell)
-        assertTrue(gameBoard!!.gridContainer[5][6] is GridCell)
     }
 
     @Test

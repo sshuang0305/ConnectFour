@@ -12,7 +12,7 @@ import org.junit.*
 
 class ConnectFourGameTest {
 
-    var gameBoard: GameBoard? = null
+    private var gameBoard: GameBoard? = null
 
     @Before
     fun setUp() {
