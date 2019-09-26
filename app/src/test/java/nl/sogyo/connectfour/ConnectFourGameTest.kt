@@ -74,12 +74,19 @@ class ConnectFourGameTest {
     }
 
     @Test
-    fun isGameFinishedTest() {
-        TestCase.assertFalse(gameBoard!!.isGameFinished())
+    fun isGameWonByPlayerTest() {
+        TestCase.assertFalse(gameBoard!!.isGameWon())
         gameBoard!!.gridContainer[2][0].placeDisc(Disc(true))
         gameBoard!!.gridContainer[3][1].placeDisc(Disc(true))
         gameBoard!!.gridContainer[4][2].placeDisc(Disc(true))
         gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
-        TestCase.assertTrue(gameBoard!!.isGameFinished())
+        TestCase.assertTrue(gameBoard!!.isGameWon())
+    }
+
+    @Test
+    fun isGameEndedInDrawTest() {
+        TestCase.assertFalse(gameBoard!!.isGameEndedInATie())
+        gameBoard!!.discContainer.clear()
+        TestCase.assertTrue(gameBoard!!.isGameEndedInATie())
     }
 }
