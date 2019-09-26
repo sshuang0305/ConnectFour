@@ -1,11 +1,15 @@
 package nl.sogyo.connectfour
 
+import android.content.Context
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.view.LayoutInflater
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -29,9 +33,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun placeDiscToDropInView() {
-        positionOfDiscToDrop = gameBoard.gridContainer[0].size / 2
-        discLayout.removeViewAt(positionOfDiscToDrop)
-        discLayout.addView(getDiscToDropView(), positionOfDiscToDrop)
+        if (gameBoard.isGameWon() || gameBoard.isGameEndedInATie()) {
+            showEndOfGame()
+        }
+        else {
+            positionOfDiscToDrop = gameBoard.gridContainer[0].size / 2
+            discLayout.removeViewAt(positionOfDiscToDrop)
+            discLayout.addView(getDiscToDropView(), positionOfDiscToDrop)
+        }
+    }
+
+    private fun showEndOfGame() {
+        makeGameBoardLayoutInvisible()
+    }
+
+    private fun makeGameBoardLayoutInvisible() {
+        gridContainerLayout.visibility = View.INVISIBLE
+        discLayout.visibility = View.INVISIBLE
+        gameButtonsLayout.visibility = View.INVISIBLE
     }
 
     private fun getDiscToDropView(): ImageView {
