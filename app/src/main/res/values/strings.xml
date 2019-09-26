@@ -5,4 +5,5 @@
     <string name="go_left_button">Left</string>
     <string name="go_right_button">Right</string>
     <string name="drop_disc_button">DROP</string>
+    <string name="new_game_button">new game</string>
 </resources>

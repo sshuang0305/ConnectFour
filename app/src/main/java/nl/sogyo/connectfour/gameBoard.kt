@@ -88,9 +88,9 @@ class GameBoard(private val width: Int, private val height: Int) {
         return false
     }
 
-    fun isGameWonByPlayerOne() = !discContainer[0].myDisc && (isConnectedHorizontally() ||
+    fun isGameWonByPlayerOne() = discContainer.size != 0 && !discContainer[0].myDisc && (isConnectedHorizontally() ||
                                  isConnectedVertically() || isConnectedLeftDownToRightUp() || isConnectedRightDownToLeftUp())
-    fun isGameWonByPlayerTwo() = discContainer[0].myDisc && (isConnectedHorizontally() ||
+    fun isGameWonByPlayerTwo() = discContainer.size != 0 && discContainer[0].myDisc && (isConnectedHorizontally() ||
                                  isConnectedVertically() || isConnectedLeftDownToRightUp() || isConnectedRightDownToLeftUp())
     fun isGameEndedInATie() = discContainer.size == 0
 }

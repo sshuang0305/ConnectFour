@@ -4,6 +4,8 @@ import android.content.Context
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -14,7 +16,7 @@ import android.view.LayoutInflater
 
 class MainActivity : AppCompatActivity() {
 
-    private val gameBoard = GameBoard(7, 6)
+    private var gameBoard = GameBoard(7, 6)
     private var positionOfDiscToDrop = gameBoard.gridContainer[0].size / 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun placeDiscToDropInView() {
-        if (gameBoard.isGameWonByPlayerOne() || gameBoard.isGameWonByPlayerTwo() || gameBoard.isGameEndedInATie()) {
+        if (gameBoard.isGameEndedInATie() || gameBoard.isGameWonByPlayerOne() || gameBoard.isGameWonByPlayerTwo()) {
             showEndOfGame()
         }
         else {
@@ -45,12 +47,48 @@ class MainActivity : AppCompatActivity() {
 
     private fun showEndOfGame() {
         makeGameBoardLayoutInvisible()
+        winnerLayout.addView(getEndOfGameTextView())
+        winnerLayout.addView(getEndOfGameImageView())
+    }
+
+    private fun getEndOfGameTextView(): TextView {
+        val endOfGameTextView = TextView(this)
+        endOfGameTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 64f)
+        endOfGameTextView.gravity =Gravity.CENTER
+        when {
+            gameBoard.isGameWonByPlayerOne() || gameBoard.isGameWonByPlayerTwo()-> endOfGameTextView.text = "WINNER"
+            gameBoard.isGameEndedInATie() -> endOfGameTextView.text = "DRAW"
+        }
+        return endOfGameTextView
+    }
+
+    private fun getEndOfGameImageView(): ImageView {
+        val endOfGameImageView = ImageView(this)
+        val imageLayout = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        endOfGameImageView.layoutParams = imageLayout
+        when {
+            gameBoard.isGameEndedInATie() -> endOfGameImageView.setImageResource(R.drawable.no_winner)
+            gameBoard.isGameWonByPlayerOne() -> endOfGameImageView.setImageResource(R.drawable.totoro_winner)
+            gameBoard.isGameWonByPlayerTwo() -> endOfGameImageView.setImageResource(R.drawable.sootsprite_winner)
+        }
+        return endOfGameImageView
     }
 
     private fun makeGameBoardLayoutInvisible() {
-        gridContainerLayout.visibility = View.INVISIBLE
-        discLayout.visibility = View.INVISIBLE
-        gameButtonsLayout.visibility = View.INVISIBLE
+        discLayout.visibility = View.GONE
+        gameButtonsLayout.visibility = View.GONE
+    }
+
+    fun startNewGame(view: View) {
+        gridContainerLayout.removeAllViews()
+        winnerLayout.removeAllViews()
+        discLayout.removeAllViews()
+        gameBoard = GameBoard(7, 6)
+        createDiscContainer()
+        createGridContainer()
+        gridContainerLayout.visibility = View.VISIBLE
+        discLayout.visibility = View.VISIBLE
+        gameButtonsLayout.visibility = View.VISIBLE
     }
 
     private fun getDiscToDropView(): ImageView {
@@ -110,7 +148,7 @@ class MainActivity : AppCompatActivity() {
     private fun createImageViewForDisc(imageResource: Int): ImageView {
         val imageView = ImageView(this)
         imageView.setImageResource(imageResource)
-        imageView.setLayoutParams(TableRow.LayoutParams(125,125, 1f))
+        imageView.layoutParams = TableRow.LayoutParams(125,125, 1f)
         return imageView
     }
 
