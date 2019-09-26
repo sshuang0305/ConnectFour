@@ -90,8 +90,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="#673AB7">
-        </TableLayout>
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#946630"></TableLayout>
 
         <LinearLayout
             android:id="@+id/gameButtonsLayout"
@@ -114,7 +117,8 @@
                 android:background="#FFFFFF"
                 android:contentDescription="@string/go_left_button"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/totoro_left_button" />
+                app:srcCompat="@drawable/totoro_left_button"
+                android:onClick="moveDiscToDropToLeftOrRight"/>
 
             <Button
                 android:id="@+id/drop_disc_button"
@@ -124,7 +128,8 @@
                 android:background="#E1FFD2"
                 android:text="@string/drop_disc_button"
                 android:textColor="#4CAF50"
-                android:textSize="36sp" />
+                android:textSize="36sp"
+                android:onClick="dropDiscIntoColumn"/>
 
             <ImageButton
                 android:id="@+id/go_right_button"
@@ -134,7 +139,8 @@
                 android:background="#FFFFFF"
                 android:contentDescription="@string/go_right_button"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/totoro_right_button" />
+                app:srcCompat="@drawable/totoro_right_button"
+                android:onClick="moveDiscToDropToLeftOrRight"/>
 
         </LinearLayout>
 
