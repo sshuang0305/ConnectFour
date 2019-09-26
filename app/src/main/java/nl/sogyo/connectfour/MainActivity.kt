@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun placeDiscToDropInView() {
-        if (gameBoard.isGameWon() || gameBoard.isGameEndedInATie()) {
+        if (gameBoard.isGameWonByPlayerOne() || gameBoard.isGameWonByPlayerTwo() || gameBoard.isGameEndedInATie()) {
             showEndOfGame()
         }
         else {

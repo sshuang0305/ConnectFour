@@ -74,13 +74,30 @@ class ConnectFourGameTest {
     }
 
     @Test
-    fun isGameWonByPlayerTest() {
-        TestCase.assertFalse(gameBoard!!.isGameWon())
-        gameBoard!!.gridContainer[2][0].placeDisc(Disc(true))
-        gameBoard!!.gridContainer[3][1].placeDisc(Disc(true))
-        gameBoard!!.gridContainer[4][2].placeDisc(Disc(true))
-        gameBoard!!.gridContainer[5][3].placeDisc(Disc(true))
-        TestCase.assertTrue(gameBoard!!.isGameWon())
+    fun isGameWonByPlayerOneTest() {
+        TestCase.assertFalse(gameBoard!!.isGameWonByPlayerOne())
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        TestCase.assertTrue(gameBoard!!.isGameWonByPlayerOne())
+    }
+
+    @Test
+    fun isGameWonByPlayerTwoTest() {
+        TestCase.assertFalse(gameBoard!!.isGameWonByPlayerTwo())
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(0)
+        gameBoard!!.dropDiscIntoColumn(1)
+        gameBoard!!.dropDiscIntoColumn(2)
+        gameBoard!!.dropDiscIntoColumn(1)
+        TestCase.assertTrue(gameBoard!!.isGameWonByPlayerTwo())
     }
 
     @Test
