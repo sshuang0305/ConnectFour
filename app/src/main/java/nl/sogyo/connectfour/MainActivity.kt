@@ -1,6 +1,12 @@
+/**
+ * MainActivity.kt
+ *
+ * @since 18/09/19
+ * @author Shan Shan Huang
+ */
+
 package nl.sogyo.connectfour
 
-import android.content.Context
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,9 +15,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import android.view.LayoutInflater
-
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -68,8 +71,8 @@ class MainActivity : AppCompatActivity() {
         endOfGameImageView.layoutParams = imageLayout
         when {
             gameBoard.isGameEndedInATie() -> endOfGameImageView.setImageResource(R.drawable.no_winner)
-            gameBoard.isGameWonByPlayerOne() -> endOfGameImageView.setImageResource(R.drawable.totoro_winner)
-            gameBoard.isGameWonByPlayerTwo() -> endOfGameImageView.setImageResource(R.drawable.sootsprite_winner)
+            gameBoard.isGameWonByPlayerOne() -> endOfGameImageView.setImageResource(R.drawable.player1_winner)
+            gameBoard.isGameWonByPlayerTwo() -> endOfGameImageView.setImageResource(R.drawable.player2_winner)
         }
         return endOfGameImageView
     }
@@ -94,8 +97,8 @@ class MainActivity : AppCompatActivity() {
     private fun getDiscToDropView(): ImageView {
         val disc = gameBoard.discContainer[0]
         return when {
-            disc.myDisc -> createImageViewForDisc(R.drawable.totoro_disc_todrop)
-            else -> createImageViewForDisc(R.drawable.soot_disc_todrop)
+            disc.myDisc -> createImageViewForDisc(R.drawable.player1_disc_todrop)
+            else -> createImageViewForDisc(R.drawable.player2_disc_todrop)
         }
     }
 
@@ -140,8 +143,8 @@ class MainActivity : AppCompatActivity() {
     private fun createGridCellView(gridCell: GridCell): ImageView {
         return when {
             gridCell.isEmpty() -> createImageViewForDisc(R.drawable.no_disc)
-            gridCell.disc!!.myDisc -> createImageViewForDisc(R.drawable.totoro_disc)
-            else -> createImageViewForDisc(R.drawable.soot_disc)
+            gridCell.disc!!.myDisc -> createImageViewForDisc(R.drawable.player1_disc)
+            else -> createImageViewForDisc(R.drawable.player2_disc)
         }
     }
 

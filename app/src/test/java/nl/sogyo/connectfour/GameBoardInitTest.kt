@@ -25,8 +25,8 @@ class GameBoardInitTest {
 
     @Test
     fun is7Column6RowBoardCreatedTest() {
-        assertEquals(7, gameBoard!!.gridContainer[0].size)
         assertEquals(6, gameBoard!!.gridContainer.size)
+        assertEquals(7, gameBoard!!.gridContainer[0].size)
     }
 
     @Test

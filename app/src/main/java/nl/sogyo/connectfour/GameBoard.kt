@@ -1,5 +1,5 @@
 /**
- * gameBoard.kt
+ * GameBoard.kt
  *
  * @since 18/09/19
  * @author Shan Shan Huang
